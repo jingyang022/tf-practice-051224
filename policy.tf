@@ -64,3 +64,8 @@ resource "aws_iam_policy_attachment" "custom-dynamodb-read" {
   roles      = [aws_iam_role.ec2_role_terraform.name]
   policy_arn = "arn:aws:iam::255945442255:policy/yap-dynamodb-read"
 }
+
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "yap_ec2_profile"
+  role = aws_iam_role.ec2_role_terraform.name
+}

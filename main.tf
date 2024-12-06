@@ -32,6 +32,7 @@ resource "aws_instance" "public" {
     subnet_id = "subnet-004425cdf7e7a28a8"
     #subnet_id = data.aws_subnets.public.ids[1] #Public Subnet ID, e.g. subnet-xxxxxxxxxxx
     associate_public_ip_address = true
+    iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
     #key_name = "yap-231124" #Change to your keyname, e.g. jazeel-key-pair
     vpc_security_group_ids = [aws_security_group.example.id]
 
@@ -63,4 +64,10 @@ resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
     from_port = 443
     ip_protocol = "tcp"
     to_port = 443
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
+  security_group_id = aws_security_group.example.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" # semantically equivalent to all ports
 }
