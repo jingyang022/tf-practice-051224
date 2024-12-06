@@ -58,3 +58,9 @@ resource "aws_iam_policy" "yap-dynamodb-read" {
     ]
 })
 }
+
+resource "aws_iam_policy_attachment" "custom-dynamodb-read" {
+  name       = "custom-dynamodb-read"
+  roles      = [aws_iam_role.ec2_role_terraform.name]
+  policy_arn = "arn:aws:iam::255945442255:policy/yap-dynamodb-read"
+}
